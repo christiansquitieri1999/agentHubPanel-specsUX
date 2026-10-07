@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en" class="h-full" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f3f5f1" />
+    <title>AgentHub Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  </head>
+  <body class="h-full bg-[#f3f5f1] font-sans text-slate-900 antialiased transition-colors dark:bg-[#101714] dark:text-[#eef4ef]">
+    <button id="mobile-backdrop" type="button" aria-label="Close navigation" class="fixed inset-0 z-30 hidden bg-slate-950/50 backdrop-blur-sm lg:hidden"></button>
+
+    <div class="min-h-full lg:flex">
+      <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 hidden w-64 shrink-0 flex-col bg-[#143b34] text-white shadow-2xl shadow-emerald-950/10 lg:static lg:flex lg:shadow-none">
+        <div class="flex h-20 items-center gap-3 border-b border-white/10 px-6">
+          <div class="grid size-9 place-items-center rounded-xl bg-[#a5e6c5] text-[#143b34]"><i data-lucide="blocks" class="size-5"></i></div>
+          <div>
+            <p class="text-[15px] font-semibold tracking-wide">agent<span class="text-[#a5e6c5]">hub</span></p>
+            <p class="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-100/55">Control room</p>
+          </div>
+          <button id="mobile-close" type="button" aria-label="Close navigation" class="ml-auto rounded-lg p-2 text-emerald-100/70 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a5e6c5] lg:hidden"><i data-lucide="x" class="size-4"></i></button>
+        </div>
+
+        <div class="px-4 pt-7">
+          <p class="px-3 text-[10px] font-semibold uppercase tracking-[0.19em] text-emerald-100/45">Workspace</p>
+          <nav aria-label="Main navigation" class="mt-3 space-y-1">
+            <a href="#dashboard" data-nav="dashboard" aria-current="page" class="nav-link group flex items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 text-[13px] font-medium text-emerald-50/75 transition hover:bg-white/[0.07] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a5e6c5]">
+              <i data-lucide="layout-dashboard" class="size-[17px] text-emerald-100/65 group-[.is-active]:text-[#a5e6c5]"></i><span>Dashboard</span>
+            </a>
+            <a href="#users" data-nav="users" class="nav-link group flex items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 text-[13px] font-medium text-emerald-50/75 transition hover:bg-white/[0.07] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a5e6c5]">
+              <i data-lucide="users" class="size-[17px] text-emerald-100/65"></i><span>User Management</span>
+            </a>
+            <a href="#agents" data-nav="agents" class="nav-link group flex items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 text-[13px] font-medium text-emerald-50/75 transition hover:bg-white/[0.07] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a5e6c5]">
+              <i data-lucide="bot" class="size-[17px] text-emerald-100/65"></i><span>Agent Management</span>
+            </a>
+            <a href="#skills" data-nav="skills" class="nav-link group flex items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 text-[13px] font-medium text-emerald-50/75 transition hover:bg-white/[0.07] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a5e6c5]">
+              <i data-lucide="sparkles" class="size-[17px] text-emerald-100/65"></i><span>Skills</span>
+            </a>
+            <a href="#contracts" data-nav="contracts" class="nav-link group flex items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 text-[13px] font-medium text-emerald-50/75 transition hover:bg-white/[0.07] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a5e6c5]">
+              <i data-lucide="file-check-2" class="size-[17px] text-emerald-100/65"></i><span>Agent Contracts</span>
+            </a>
+            <a href="#errors" data-nav="errors" class="nav-link group flex items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 text-[13px] font-medium text-emerald-50/75 transition hover:bg-white/[0.07] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a5e6c5]">
+              <i data-lucide="activity" class="size-[17px] text-emerald-100/65"></i><span>Error Log</span><span id="sidebar-error-count" class="ml-auto rounded-md bg-rose-400/15 px-1.5 py-0.5 text-[10px] font-semibold text-rose-200">3</span>
+            </a>
+          </nav>
+        </div>
+
+        <div class="mt-auto p-4">
+          <div class="rounded-2xl border border-white/10 bg-white/[0.055] p-4">
+            <div class="flex items-center gap-2 text-[11px] font-semibold text-emerald-50/90"><span class="relative flex size-2"><span class="absolute inline-flex size-full animate-ping rounded-full bg-[#a5e6c5] opacity-60"></span><span class="relative inline-flex size-2 rounded-full bg-[#a5e6c5]"></span></span>All systems operational</div>
+            <p class="mt-2 text-[10px] leading-4 text-emerald-100/50">AgentHub platform status</p>
+          </div>
+          <div class="mt-4 flex items-center gap-3 rounded-xl px-2 py-2">
+            <div class="grid size-9 shrink-0 place-items-center rounded-full bg-[#d5eadc] text-[11px] font-bold text-[#174436]">AM</div>
+            <div class="min-w-0"><p class="truncate text-xs font-semibold text-white">Alex Morgan</p><p class="mt-0.5 text-[10px] text-emerald-100/55">Platform admin</p></div>
+            <i data-lucide="chevrons-up-down" class="ml-auto size-4 text-emerald-100/50"></i>
+          </div>
+        </div>
+      </aside>
+
+      <div class="min-w-0 flex-1">
+        <header class="sticky top-0 z-20 border-b border-[#e3e8e1] bg-[#f8faf7]/90 backdrop-blur-xl dark:border-white/10 dark:bg-[#121a16]/90">
+          <div class="flex h-20 items-center justify-between gap-3 px-4 sm:px-7 xl:px-10">
+            <div class="flex min-w-0 items-center gap-3">
+              <button id="mobile-open" type="button" aria-label="Open navigation" aria-expanded="false" class="grid size-10 shrink-0 place-items-center rounded-xl border border-[#dfe6de] bg-white text-slate-700 shadow-sm hover:bg-[#f4f7f3] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08] lg:hidden"><i data-lucide="menu" class="size-[18px]"></i></button>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500"><span>AgentHub</span><i data-lucide="chevron-right" class="size-3"></i><span id="crumb-title" class="truncate text-emerald-800 dark:text-emerald-300">Dashboard</span></div>
+                <h1 id="page-title" class="mt-1 truncate text-[16px] font-semibold text-slate-900 dark:text-white">Dashboard</h1>
+              </div>
+            </div>
+            <div class="flex shrink-0 items-center gap-2 sm:gap-3">
+              <span class="hidden items-center gap-2 rounded-full border border-[#e1e7df] bg-white px-3 py-1.5 text-[10px] font-medium text-slate-500 sm:flex dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400"><span class="size-1.5 rounded-full bg-emerald-500"></span>Production</span>
+              <span class="hidden h-7 w-px bg-[#e1e7df] sm:block dark:bg-white/10"></span>
+              <button id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Toggle color theme" class="grid size-10 place-items-center rounded-xl border border-[#dfe6de] bg-white text-slate-600 shadow-sm transition hover:-translate-y-0.5 hover:text-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 dark:border-white/10 dark:bg-white/[0.04] dark:text-amber-200 dark:hover:text-amber-100">
+                <i id="theme-icon" data-lucide="moon" class="size-[17px]"></i>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <main class="mx-auto max-w-screen-2xl px-4 pb-12 pt-7 sm:px-7 sm:pt-9 xl:px-10">
+          <!-- Dashboard: responsive KPI cards followed by the weekly activity placeholder. -->
+          <section id="view-dashboard" data-view="dashboard" aria-labelledby="dashboard-heading">
+            <div class="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+              <div><p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-800 dark:text-emerald-300">Wednesday, October 7, 2026</p><h2 id="dashboard-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">Platform overview</h2><p class="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">A live pulse on your agent ecosystem.</p></div>
+              <div class="inline-flex w-fit items-center gap-2 rounded-lg border border-[#e3e8e1] bg-white px-3 py-2 text-[11px] font-medium text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-300"><i data-lucide="calendar-days" class="size-3.5 text-slate-400"></i>October 2026</div>
+            </div>
+
+            <div id="dashboard-grid" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <article class="relative overflow-hidden rounded-2xl border border-[#e2e8e1] bg-white p-5 shadow-[0_2px_12px_rgba(20,59,52,0.035)] dark:border-white/10 dark:bg-[#18221c] dark:shadow-none"><div class="flex items-start justify-between"><div class="grid size-9 place-items-center rounded-xl bg-emerald-50 text-emerald-800 dark:bg-emerald-400/10 dark:text-emerald-300"><i data-lucide="wallet" class="size-[17px]"></i></div><span class="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-1 text-[10px] font-semibold text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300"><i data-lucide="trending-up" class="size-3"></i>12.8%</span></div><p class="mt-5 text-[11px] font-medium text-slate-500 dark:text-slate-400">Revenue this month</p><p class="mt-1 text-[27px] font-semibold tracking-tight text-slate-900 dark:text-white">$48,290<span class="ml-1 text-sm font-medium text-slate-400">.00</span></p><p class="mt-1 text-[10px] text-slate-400 dark:text-slate-500">vs. $42,805 last month</p></article>
+              <article class="relative overflow-hidden rounded-2xl border border-[#e2e8e1] bg-white p-5 shadow-[0_2px_12px_rgba(20,59,52,0.035)] dark:border-white/10 dark:bg-[#18221c] dark:shadow-none"><div class="flex items-start justify-between"><div class="grid size-9 place-items-center rounded-xl bg-amber-50 text-amber-800 dark:bg-amber-300/10 dark:text-amber-200"><i data-lucide="badge-percent" class="size-[17px]"></i></div><span class="rounded-md bg-amber-50 px-2 py-1 text-[10px] font-semibold text-amber-800 dark:bg-amber-300/10 dark:text-amber-200">8.1% of revenue</span></div><p class="mt-5 text-[11px] font-medium text-slate-500 dark:text-slate-400">Discount &amp; coupon losses</p><p class="mt-1 text-[27px] font-semibold tracking-tight text-slate-900 dark:text-white">$3,420<span class="ml-1 text-sm font-medium text-slate-400">.00</span></p><p class="mt-1 text-[10px] text-slate-400 dark:text-slate-500">Across 214 redemptions</p></article>
+              <article class="relative overflow-hidden rounded-2xl border border-[#e2e8e1] bg-white p-5 shadow-[0_2px_12px_rgba(20,59,52,0.035)] dark:border-white/10 dark:bg-[#18221c] dark:shadow-none"><div class="flex items-start justify-between"><div class="grid size-9 place-items-center rounded-xl bg-sky-50 text-sky-800 dark:bg-sky-400/10 dark:text-sky-300"><i data-lucide="bot" class="size-[17px]"></i></div><span class="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-1 text-[10px] font-semibold text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300"><span class="size-1.5 rounded-full bg-emerald-500"></span>Healthy</span></div><p class="mt-5 text-[11px] font-medium text-slate-500 dark:text-slate-400">Active agents</p><p class="mt-1 text-[27px] font-semibold tracking-tight text-slate-900 dark:text-white">128</p><p class="mt-1 text-[10px] text-slate-400 dark:text-slate-500">Across 46 client workspaces</p></article>
+              <article class="relative overflow-hidden rounded-2xl border border-[#e2e8e1] bg-white p-5 shadow-[0_2px_12px_rgba(20,59,52,0.035)] dark:border-white/10 dark:bg-[#18221c] dark:shadow-none"><div class="flex items-start justify-between"><div class="grid size-9 place-items-center rounded-xl bg-rose-50 text-rose-700 dark:bg-rose-400/10 dark:text-rose-300"><i data-lucide="triangle-alert" class="size-[17px]"></i></div><span class="rounded-md bg-rose-50 px-2 py-1 text-[10px] font-semibold text-rose-700 dark:bg-rose-400/10 dark:text-rose-300">Needs attention</span></div><p class="mt-5 text-[11px] font-medium text-slate-500 dark:text-slate-400">Failing agents</p><p class="mt-1 text-[27px] font-semibold tracking-tight text-slate-900 dark:text-white">3</p><p class="mt-1 text-[10px] text-slate-400 dark:text-slate-500">2 new failures in the last 24h</p></article>
+            </div>
+            <section aria-labelledby="weekly-activity-heading" class="mt-4 flex min-h-64 w-full flex-col rounded-2xl border border-dashed border-[#cbd7cd] bg-[#edf3ed]/70 p-5 dark:border-emerald-100/20 dark:bg-emerald-200/[0.035] sm:p-6">
+              <div class="flex items-center justify-between"><div><h3 id="weekly-activity-heading" class="text-sm font-semibold text-slate-800 dark:text-slate-200">Weekly activity</h3><p class="mt-1 text-[11px] text-slate-500 dark:text-slate-400">Usage overview · last 7 days</p></div><span class="grid size-9 place-items-center rounded-xl bg-white/80 text-emerald-800 dark:bg-white/[0.06] dark:text-emerald-300"><i data-lucide="chart-no-axes-combined" class="size-[18px]"></i></span></div>
+              <div class="flex flex-1 items-center justify-center"><div class="text-center"><div class="mx-auto grid size-11 place-items-center rounded-full border border-dashed border-emerald-800/20 text-emerald-800/50 dark:border-emerald-100/20 dark:text-emerald-200/50"><i data-lucide="chart-spline" class="size-[18px]"></i></div><p class="mt-3 text-[11px] font-medium text-slate-500 dark:text-slate-400">Weekly activity chart placeholder</p></div></div>
+            </section>
+          </section>
+
+          <!-- User Management: searchable user table with per-record details and local deletion. -->
+          <section id="view-users" data-view="users" aria-labelledby="users-heading" class="hidden">
+            <div class="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-800 dark:text-emerald-300">Workspace directory</p><h2 id="users-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">User management</h2><p class="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">Manage access, plans, and account details.</p></div><label class="relative block w-full sm:max-w-xs"><span class="sr-only">Search users</span><i data-lucide="search" class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400"></i><input data-filter="users" type="search" placeholder="Search users..." class="w-full rounded-xl border border-[#dfe6de] bg-white py-2.5 pl-9 pr-3 text-xs outline-none placeholder:text-slate-400 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/10 dark:border-white/10 dark:bg-white/[0.04] dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-400" /></label></div>
+            <div class="mb-4 flex flex-wrap gap-2"><span class="rounded-lg border border-[#e3e8e1] bg-white px-3 py-2 text-[10px] font-medium text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400"><strong id="user-total" class="font-semibold text-slate-800 dark:text-slate-200">5</strong> registered users</span><span class="rounded-lg border border-[#e3e8e1] bg-white px-3 py-2 text-[10px] font-medium text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400">Plans: Starter, Growth, Enterprise</span></div>
+            <div id="users-list" class="overflow-visible rounded-2xl border border-[#e2e8e1] bg-white shadow-[0_2px_12px_rgba(20,59,52,0.035)] dark:border-white/10 dark:bg-[#18221c] dark:shadow-none"></div>
+          </section>
+
+          <!-- Agent Management: agent records, expandable skill lists, and prompt configuration. -->
+          <section id="view-agents" data-view="agents" aria-labelledby="agents-heading" class="hidden">
+            <div class="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-800 dark:text-emerald-300">Fleet operations</p><h2 id="agents-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">Agent management</h2><p class="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">Monitor deployments, ownership, and capabilities.</p></div><label class="relative block w-full sm:max-w-xs"><span class="sr-only">Search agents</span><i data-lucide="search" class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400"></i><input data-filter="agents" type="search" placeholder="Search agents..." class="w-full rounded-xl border border-[#dfe6de] bg-white py-2.5 pl-9 pr-3 text-xs outline-none placeholder:text-slate-400 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/10 dark:border-white/10 dark:bg-white/[0.04] dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-400" /></label></div>
+            <div class="mb-4 flex flex-wrap gap-2"><span class="rounded-lg border border-[#e3e8e1] bg-white px-3 py-2 text-[10px] font-medium text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400"><strong id="agent-total" class="font-semibold text-slate-800 dark:text-slate-200">5</strong> agents shown</span></div>
+            <div id="agents-list" class="overflow-visible rounded-2xl border border-[#e2e8e1] bg-white shadow-[0_2px_12px_rgba(20,59,52,0.035)] dark:border-white/10 dark:bg-[#18221c] dark:shadow-none"></div>
+          </section>
+
+          <!-- Skills: responsive capability catalog with usage counts and record actions. -->
+          <section id="view-skills" data-view="skills" aria-labelledby="skills-heading" class="hidden">
+            <div class="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-800 dark:text-emerald-300">Capability library</p><h2 id="skills-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">Skills</h2><p class="mt-1.5 max-w-2xl text-[13px] leading-5 text-slate-500 dark:text-slate-400">Skills are capabilities that can be attached to agents. Review the catalog and see where each capability is in use.</p></div><label class="relative block w-full sm:max-w-xs"><span class="sr-only">Search skills</span><i data-lucide="search" class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400"></i><input data-filter="skills" type="search" placeholder="Search skills..." class="w-full rounded-xl border border-[#dfe6de] bg-white py-2.5 pl-9 pr-3 text-xs outline-none placeholder:text-slate-400 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/10 dark:border-white/10 dark:bg-white/[0.04] dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-400" /></label></div>
+            <div id="skills-list" class="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3"></div>
+          </section>
+
+          <!-- Agent Contracts: content-sized table and itemized contract details. -->
+          <section id="view-contracts" data-view="contracts" aria-labelledby="contracts-heading" class="hidden">
+            <div class="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-800 dark:text-emerald-300">Revenue operations</p><h2 id="contracts-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">Agent contracts</h2><p class="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">Active and past rentals across client workspaces.</p></div><label class="relative block w-full sm:max-w-xs"><span class="sr-only">Search contracts</span><i data-lucide="search" class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400"></i><input data-filter="contracts" type="search" placeholder="Search contracts..." class="w-full rounded-xl border border-[#dfe6de] bg-white py-2.5 pl-9 pr-3 text-xs outline-none placeholder:text-slate-400 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/10 dark:border-white/10 dark:bg-white/[0.04] dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-400" /></label></div>
+            <div class="mb-4 flex flex-wrap gap-2"><span class="rounded-lg border border-[#e3e8e1] bg-white px-3 py-2 text-[10px] font-medium text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400"><strong id="contract-total" class="font-semibold text-slate-800 dark:text-slate-200">5</strong> sample contracts</span><span class="rounded-lg border border-[#e3e8e1] bg-white px-3 py-2 text-[10px] font-medium text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400">Rental dates shown in UTC</span></div>
+            <div id="contracts-list" class="overflow-visible rounded-2xl border border-[#e2e8e1] bg-white shadow-[0_2px_12px_rgba(20,59,52,0.035)] dark:border-white/10 dark:bg-[#18221c] dark:shadow-none"></div>
+          </section>
+
+          <!-- Error Log: severity-coded records with trace details and local resolution state. -->
+          <section id="view-errors" data-view="errors" aria-labelledby="errors-heading" class="hidden">
+            <div class="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-700 dark:text-rose-300">Runtime monitoring</p><h2 id="errors-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">Error log</h2><p class="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">Execution errors reported by registered agents.</p></div><label class="relative block w-full sm:max-w-xs"><span class="sr-only">Search errors</span><i data-lucide="search" class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400"></i><input data-filter="errors" type="search" placeholder="Search error log..." class="w-full rounded-xl border border-[#dfe6de] bg-white py-2.5 pl-9 pr-3 text-xs outline-none placeholder:text-slate-400 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/10 dark:border-white/10 dark:bg-white/[0.04] dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-400" /></label></div>
+            <div class="mb-4 flex flex-wrap gap-2"><span class="rounded-lg border border-[#e3e8e1] bg-white px-3 py-2 text-[10px] font-medium text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400"><strong id="error-unresolved-total" class="font-semibold text-rose-700 dark:text-rose-300">3</strong> unresolved</span><span class="rounded-lg border border-[#e3e8e1] bg-white px-3 py-2 text-[10px] font-medium text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400">Severity is labeled as well as color-coded</span></div>
+            <div id="errors-list" class="overflow-visible rounded-2xl border border-[#e2e8e1] bg-white shadow-[0_2px_12px_rgba(20,59,52,0.035)] dark:border-white/10 dark:bg-[#18221c] dark:shadow-none"></div>
+          </section>
+
+          <footer class="mt-10 flex flex-col justify-between gap-2 border-t border-[#e3e8e1] pt-4 text-[10px] text-slate-400 sm:flex-row dark:border-white/10 dark:text-slate-500"><span>AgentHub Admin · Prototype</span><span>Static demo data · Local interactions only</span></footer>
+        </main>
+      </div>
+    </div>
+
+    <dialog id="app-dialog" aria-labelledby="dialog-title" class="m-auto max-h-[90dvh] w-11/12 max-w-xl overflow-y-auto rounded-2xl border-0 bg-white p-0 text-left text-slate-900 shadow-2xl backdrop:bg-slate-950/60 backdrop:backdrop-blur-sm dark:bg-[#18221c] dark:text-slate-100">
+      <div class="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-[#e8ece7] bg-white/95 px-5 py-4 backdrop-blur sm:px-6 dark:border-white/10 dark:bg-[#18221c]/95">
+        <div class="min-w-0"><p id="dialog-eyebrow" class="text-[9px] font-semibold uppercase tracking-[0.17em] text-emerald-800 dark:text-emerald-300">Record details</p><h2 id="dialog-title" class="mt-1.5 text-lg font-semibold tracking-tight">Details</h2></div>
+        <button type="button" data-dialog-close aria-label="Close dialog" class="grid size-9 shrink-0 place-items-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 dark:hover:bg-white/10 dark:hover:text-white"><i data-lucide="x" class="size-[17px]"></i></button>
+      </div>
+      <div id="dialog-body" class="px-5 py-5 sm:px-6"></div>
+      <div id="dialog-footer" class="hidden justify-end gap-2 border-t border-[#e8ece7] px-5 py-4 sm:px-6 dark:border-white/10"></div>
+    </dialog>
+
+    <script>
+      const data = {
+        users: [
+          { id: "u-101", name: "Maya Chen", email: "maya.chen@northstar.io", plan: "Enterprise", status: "Active", joined: "Mar 12, 2025", workspace: "Northstar Finance", agents: 8, spend: "$2,480.00", initials: "MC", tone: "bg-[#dceee1] text-[#24563f]" },
+          { id: "u-102", name: "Oliver Grant", email: "oliver@meridianlabs.co", plan: "Growth", status: "Active", joined: "Jun 03, 2025", workspace: "Meridian Labs", agents: 4, spend: "$1,120.00", initials: "OG", tone: "bg-[#e2e9f7] text-[#405a8b]" },
+          { id: "u-103", name: "Aisha Patel", email: "aisha@lumahealth.com", plan: "Enterprise", status: "Active", joined: "Jan 18, 2025", workspace: "Luma Health", agents: 12, spend: "$3,860.00", initials: "AP", tone: "bg-[#f6e6d8] text-[#875629]" },
+          { id: "u-104", name: "Jonah Rivera", email: "jonah.rivera@fieldwork.app", plan: "Starter", status: "Invited", joined: "Sep 29, 2026", workspace: "Fieldwork", agents: 1, spend: "$0.00", initials: "JR", tone: "bg-[#eee3f5] text-[#704c83]" },
+          { id: "u-105", name: "Elena Fischer", email: "elena@atelierhaus.de", plan: "Growth", status: "Suspended", joined: "Nov 08, 2025", workspace: "Atelier Haus", agents: 3, spend: "$740.00", initials: "EF", tone: "bg-[#f4e3e1] text-[#8b4e46]" }
+        ],
+        agents: [
+          { id: "a-201", name: "Invoice Reconciliation", owner: "Maya Chen", workspace: "Northstar Finance", status: "Failing", runs: "12.8k", skills: ["Invoice parsing", "Ledger matching", "Anomaly detection", "CSV export", "Audit trail"], prompt: "You are an invoice reconciliation agent for Northstar Finance. Compare invoice line items with ledger entries, flag discrepancies above $25, and return a concise audit summary. Never approve a payment or alter a source record." },
+          { id: "a-202", name: "Support Triage", owner: "Aisha Patel", workspace: "Luma Health", status: "Active", runs: "8.4k", skills: ["Intent classification", "Priority scoring", "Knowledge search", "PII redaction"], prompt: "Classify incoming support requests by topic and urgency. Search the approved help center, draft a helpful response, and escalate clinical or safety concerns to a human immediately. Do not provide a medical diagnosis." },
+          { id: "a-203", name: "Research Analyst", owner: "Oliver Grant", workspace: "Meridian Labs", status: "Active", runs: "6.1k", skills: ["Web research", "Source verification", "Brief writing"], prompt: "Research the user's question using approved sources. Cite every material claim, distinguish evidence from inference, and summarize the findings in a clear executive brief." },
+          { id: "a-204", name: "Lead Enrichment", owner: "Jonah Rivera", workspace: "Fieldwork", status: "Inactive", runs: "942", skills: ["Company lookup", "Contact validation", "CRM update", "Duplicate detection"], prompt: "Enrich a lead using approved company data. Validate contact details, identify possible duplicates, and prepare a proposed CRM update for human review. Do not send outreach." },
+          { id: "a-205", name: "Document Summarizer", owner: "Elena Fischer", workspace: "Atelier Haus", status: "Active", runs: "4.7k", skills: ["PDF extraction", "Summary generation", "Key dates", "Translation"], prompt: "Extract the key points, names, dates, and decisions from supplied documents. Preserve the original meaning, cite page numbers where possible, and mark uncertain extraction rather than guessing." }
+        ],
+        skills: [
+          { id: "s-301", name: "Invoice parsing", category: "Finance operations", description: "Extract vendor, line items, tax, totals, and due dates from digital or scanned invoices.", full: "Extract structured invoice data from digital files and scanned documents. Identify the vendor, invoice number, issue and due dates, line items, tax amounts, currency, and total. Return confidence per field and flag low-confidence OCR for review.", count: 18, icon: "scan-text", tone: "bg-emerald-50 text-emerald-800 dark:bg-emerald-400/10 dark:text-emerald-300" },
+          { id: "s-302", name: "Intent classification", category: "Customer support", description: "Route a message to the right support category using context and intent.", full: "Classify messages using the configured category taxonomy. Consider the full conversation context, identify the primary intent, and return a confidence score. Flag ambiguous requests rather than forcing a low-confidence category.", count: 24, icon: "list-filter", tone: "bg-sky-50 text-sky-800 dark:bg-sky-400/10 dark:text-sky-300" },
+          { id: "s-303", name: "Web research", category: "Research", description: "Find, cross-check, and summarize information from approved online sources.", full: "Search approved online sources, compare claims across independent references, and summarize relevant findings. Include source titles, links, access dates, and clear attribution for factual claims.", count: 13, icon: "globe-2", tone: "bg-cyan-50 text-cyan-800 dark:bg-cyan-400/10 dark:text-cyan-300" },
+          { id: "s-304", name: "PII redaction", category: "Privacy & security", description: "Detect and mask personal information before content is shared or stored.", full: "Detect configured personal identifiers such as email addresses, phone numbers, and account IDs. Replace sensitive values with consistent placeholders while preserving surrounding context for downstream processing.", count: 31, icon: "scan-eye", tone: "bg-rose-50 text-rose-800 dark:bg-rose-400/10 dark:text-rose-300" },
+          { id: "s-305", name: "Source verification", category: "Research", description: "Check factual claims against cited sources and flag unsupported statements.", full: "Compare a response's factual claims against its cited sources. Identify unsupported or conflicting statements, distinguish direct evidence from interpretation, and return a concise verification report.", count: 9, icon: "badge-check", tone: "bg-violet-50 text-violet-800 dark:bg-violet-400/10 dark:text-violet-300" },
+          { id: "s-306", name: "Summary generation", category: "Productivity", description: "Turn long documents and conversations into structured, concise summaries.", full: "Produce a concise summary that preserves important decisions, action items, dates, and open questions. Adapt the structure to the input type and avoid adding facts not present in the source.", count: 27, icon: "notebook-pen", tone: "bg-amber-50 text-amber-800 dark:bg-amber-300/10 dark:text-amber-200" },
+          { id: "s-307", name: "Ledger matching", category: "Finance operations", description: "Match transactions to ledger entries and identify outliers for review.", full: "Compare transactions with ledger entries using date, amount, reference, and vendor. Explain proposed matches, assign confidence, and flag unmatched or anomalous entries without changing source records.", count: 11, icon: "combine", tone: "bg-orange-50 text-orange-800 dark:bg-orange-300/10 dark:text-orange-200" },
+          { id: "s-308", name: "Translation", category: "Communication", description: "Translate business content while preserving tone, terminology, and formatting.", full: "Translate business content into the requested language while preserving meaning, tone, names, numbers, and formatting. Retain approved product terminology and flag phrases that have no reliable direct translation.", count: 16, icon: "languages", tone: "bg-indigo-50 text-indigo-800 dark:bg-indigo-300/10 dark:text-indigo-200" }
+        ],
+        contracts: [
+          { id: "c-401", client: "Northstar Finance", contact: "Maya Chen", agent: "Invoice Reconciliation", status: "Active", start: "Oct 01, 2026", end: "Sep 30, 2027", paid: 12400, skills: [{ name: "Invoice parsing", price: 3800 }, { name: "Ledger matching", price: 5200 }, { name: "Anomaly detection", price: 3400 }] },
+          { id: "c-402", client: "Meridian Labs", contact: "Oliver Grant", agent: "Research Analyst", status: "Active", start: "Aug 15, 2026", end: "Aug 14, 2027", paid: 8760, skills: [{ name: "Web research", price: 4200 }, { name: "Source verification", price: 2860 }, { name: "Brief writing", price: 1700 }] },
+          { id: "c-403", client: "Luma Health", contact: "Aisha Patel", agent: "Support Triage", status: "Active", start: "Jul 01, 2026", end: "Jun 30, 2027", paid: 15600, skills: [{ name: "Intent classification", price: 5600 }, { name: "Priority scoring", price: 4200 }, { name: "PII redaction", price: 5800 }] },
+          { id: "c-404", client: "Atelier Haus", contact: "Elena Fischer", agent: "Document Summarizer", status: "Past", start: "Apr 01, 2025", end: "Mar 31, 2026", paid: 6240, skills: [{ name: "PDF extraction", price: 2400 }, { name: "Summary generation", price: 2160 }, { name: "Key dates", price: 1680 }] },
+          { id: "c-405", client: "Fieldwork", contact: "Jonah Rivera", agent: "Lead Enrichment", status: "Past", start: "Jan 01, 2025", end: "Dec 31, 2025", paid: 4800, skills: [{ name: "Company lookup", price: 1900 }, { name: "Contact validation", price: 1700 }, { name: "Duplicate detection", price: 1200 }] }
+        ],
+        errors: [
+          { id: "e-501", time: "Oct 07, 2026 · 10:42 AM", agent: "Invoice Reconciliation", type: "Timeout", severity: "Critical", description: "Ledger matching exceeded the 30-second execution limit.", resolved: false, trace: "TimeoutError: execution exceeded 30000ms\n  at matchLedgerEntries (agent://invoice-reconciliation/ledger.js:184:12)\n  at async reconcileBatch (agent://invoice-reconciliation/index.js:92:7)\n  Context: batch_id=NSF-2026-1007-04, records=1,842\n  Retry count: 3 / 3" },
+          { id: "e-502", time: "Oct 07, 2026 · 09:18 AM", agent: "Support Triage", type: "Authentication", severity: "Warning", description: "Knowledge base token expired during source retrieval.", resolved: false, trace: "AuthenticationError: token expired\n  at fetchKnowledgeArticle (agent://support-triage/knowledge.js:48:16)\n  at async draftResponse (agent://support-triage/response.js:131:9)\n  Context: workspace=luma-health, article_id=KB-8821\n  Suggested action: refresh workspace credentials" },
+          { id: "e-503", time: "Oct 07, 2026 · 08:56 AM", agent: "Research Analyst", type: "Source unavailable", severity: "Info", description: "A referenced source returned HTTP 503 after retry.", resolved: true, trace: "SourceUnavailableError: upstream returned HTTP 503\n  at verifySource (agent://research-analyst/sources.js:77:10)\n  Context: source=https://example.org/report, retries=2\n  Resolution: fallback source used; report completed" },
+          { id: "e-504", time: "Oct 06, 2026 · 06:31 PM", agent: "Lead Enrichment", type: "Validation", severity: "Warning", description: "Contact record failed email format validation.", resolved: false, trace: "ValidationError: invalid email address\n  at validateContact (agent://lead-enrichment/contact.js:62:8)\n  Context: lead_id=FW-19342, field=email\n  Action: record held for manual review" },
+          { id: "e-505", time: "Oct 06, 2026 · 04:09 PM", agent: "Document Summarizer", type: "Extraction", severity: "Info", description: "Two pages of the uploaded PDF could not be parsed.", resolved: true, trace: "ExtractionWarning: OCR confidence below threshold\n  at extractPageText (agent://document-summarizer/parse.js:204:11)\n  Context: document_id=AH-8820, pages=14,15\n  Resolution: low-confidence pages labeled in summary" },
+          { id: "e-506", time: "Oct 06, 2026 · 02:27 PM", agent: "Invoice Reconciliation", type: "Mismatch", severity: "Critical", description: "Invoice total differs from ledger amount by $1,240.00.", resolved: false, trace: "ReconciliationError: amount mismatch\n  at compareTotals (agent://invoice-reconciliation/compare.js:119:5)\n  Context: invoice=INV-20318, invoice_total=18420.00, ledger_total=17180.00\n  Action: payment approval blocked pending review" }
+        ]
+      };
+
+      const viewInfo = {
+        dashboard: { title: "Dashboard" }, users: { title: "User Management" }, agents: { title: "Agent Management" },
+        skills: { title: "Skills" }, contracts: { title: "Agent Contracts" }, errors: { title: "Error Log" }
+      };
+      const dialog = document.getElementById("app-dialog");
+      const dialogTitle = document.getElementById("dialog-title");
+      const dialogEyebrow = document.getElementById("dialog-eyebrow");
+      const dialogBody = document.getElementById("dialog-body");
+      const dialogFooter = document.getElementById("dialog-footer");
+      let currentView = "dashboard";
+      let dialogReturnFocus = null;
+      let pendingConfirm = null;
+
+      function escapeHTML(value) {
+        return String(value).replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
+      }
+
+      function icon(name, classes = "size-4") {
+        return `<i data-lucide="${name}" class="${classes}"></i>`;
+      }
+
+      function refreshIcons() {
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      function statusBadge(status) {
+        const styles = {
+          Active: "bg-emerald-50 text-emerald-800 ring-emerald-700/10 dark:bg-emerald-400/10 dark:text-emerald-300 dark:ring-emerald-300/15",
+          Failing: "bg-rose-50 text-rose-800 ring-rose-700/10 dark:bg-rose-400/10 dark:text-rose-300 dark:ring-rose-300/15",
+          Inactive: "bg-slate-100 text-slate-600 ring-slate-700/10 dark:bg-white/10 dark:text-slate-300 dark:ring-white/10",
+          Invited: "bg-sky-50 text-sky-800 ring-sky-700/10 dark:bg-sky-400/10 dark:text-sky-300 dark:ring-sky-300/15",
+          Suspended: "bg-amber-50 text-amber-800 ring-amber-700/10 dark:bg-amber-300/10 dark:text-amber-200 dark:ring-amber-200/15",
+          Past: "bg-slate-100 text-slate-600 ring-slate-700/10 dark:bg-white/10 dark:text-slate-300 dark:ring-white/10"
+        };
+        return `<span class="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-[9px] font-semibold ring-1 ring-inset ${styles[status] || styles.Inactive}"><span class="size-1.5 rounded-full bg-current"></span>${escapeHTML(status)}</span>`;
+      }
+
+      function severityBadge(severity) {
+        const styles = {
+          Critical: "bg-rose-50 text-rose-800 ring-rose-700/10 dark:bg-rose-400/10 dark:text-rose-300 dark:ring-rose-300/15",
+          Warning: "bg-amber-50 text-amber-800 ring-amber-700/10 dark:bg-amber-300/10 dark:text-amber-200 dark:ring-amber-200/15",
+          Info: "bg-sky-50 text-sky-800 ring-sky-700/10 dark:bg-sky-400/10 dark:text-sky-300 dark:ring-sky-300/15"
+        };
+        return `<span class="inline-flex rounded-md px-2 py-1 text-[9px] font-semibold ring-1 ring-inset ${styles[severity]}">${escapeHTML(severity)}</span>`;
+      }
+
+      function errorTypeBadge(type, severity) {
+        const styles = {
+          Critical: "bg-rose-50 text-rose-800 ring-rose-700/10 dark:bg-rose-400/10 dark:text-rose-300 dark:ring-rose-300/15",
+          Warning: "bg-amber-50 text-amber-800 ring-amber-700/10 dark:bg-amber-300/10 dark:text-amber-200 dark:ring-amber-200/15",
+          Info: "bg-sky-50 text-sky-800 ring-sky-700/10 dark:bg-sky-400/10 dark:text-sky-300 dark:ring-sky-300/15"
+        };
+        return `<span class="inline-flex rounded-md px-2 py-1 text-[9px] font-semibold ring-1 ring-inset ${styles[severity]}">${escapeHTML(type)}</span>`;
+      }
+
+      function actionMenu(kind, id, actions, label) {
+        const items = actions.map((action) => `<button type="button" role="menuitem" data-action="${action.key}" data-kind="${kind}" data-id="${escapeHTML(id)}" class="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[11px] font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-emerald-700 dark:text-slate-300 dark:hover:bg-white/[0.07] dark:hover:text-white">${icon(action.icon, `size-3.5 ${action.danger ? "text-rose-600 dark:text-rose-300" : "text-slate-400"}`)}${action.label}</button>`).join("");
+        return `<div class="relative shrink-0"><button type="button" data-menu-trigger aria-label="Actions for ${escapeHTML(label)}" aria-expanded="false" class="grid size-9 place-items-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 dark:hover:bg-white/10 dark:hover:text-white">${icon("ellipsis-vertical", "size-[18px]")}</button><div data-menu-panel role="menu" hidden class="absolute right-0 top-10 z-30 min-w-44 rounded-xl border border-[#e5e9e4] bg-white p-1.5 shadow-xl shadow-slate-900/10 dark:border-white/10 dark:bg-[#202b24] dark:shadow-black/30">${items}</div></div>`;
+      }
+
+      function emptyState(title, message) {
+        return `<div class="px-5 py-14 text-center"><span class="mx-auto grid size-10 place-items-center rounded-xl bg-slate-100 text-slate-400 dark:bg-white/[0.06] dark:text-slate-500">${icon("search-x", "size-5")}</span><p class="mt-3 text-xs font-semibold text-slate-700 dark:text-slate-200">${title}</p><p class="mt-1 text-[10px] text-slate-400">${message}</p></div>`;
+      }
+
+      function renderUsers() {
+        const query = document.querySelector('[data-filter="users"]').value.toLowerCase().trim();
+        const users = data.users.filter((user) => `${user.name} ${user.email} ${user.plan} ${user.status} ${user.workspace}`.toLowerCase().includes(query));
+        document.getElementById("user-total").textContent = data.users.length;
+        document.getElementById("users-list").innerHTML = users.length ? `
+          <div class="overflow-x-auto" role="region" aria-label="Registered users" tabindex="0">
+            <table class="w-full min-w-max border-collapse text-left">
+              <caption class="sr-only">Registered AgentHub users</caption>
+              <thead class="bg-[#f7f9f6] dark:bg-white/[0.035]"><tr><th scope="col" class="px-5 py-3 text-[9px] font-semibold uppercase tracking-wide text-slate-400">User</th><th scope="col" class="px-3 py-3 text-[9px] font-semibold uppercase tracking-wide text-slate-400">Plan</th><th scope="col" class="px-3 py-3 text-[9px] font-semibold uppercase tracking-wide text-slate-400">Status</th><th scope="col" class="px-3 py-3 text-[9px] font-semibold uppercase tracking-wide text-slate-400">Workspace</th><th scope="col" class="px-4 py-3 text-right text-[9px] font-semibold uppercase tracking-wide text-slate-400">Actions</th></tr></thead>
+              <tbody class="divide-y divide-[#edf0ec] dark:divide-white/[0.06]">${users.map((user) => `
+                <tr class="transition-colors hover:bg-[#fafbf9] dark:hover:bg-white/[0.025]">
+                  <td class="px-5 py-3.5"><div class="flex min-w-0 items-center gap-3"><div class="grid size-9 shrink-0 place-items-center rounded-xl ${user.tone} text-[10px] font-bold">${escapeHTML(user.initials)}</div><div class="min-w-0"><p class="truncate text-xs font-semibold text-slate-800 dark:text-slate-100">${escapeHTML(user.name)}</p><p class="mt-1 truncate text-[10px] text-slate-500 dark:text-slate-400">${escapeHTML(user.email)}</p></div></div></td>
+                  <td class="px-3 py-3.5 text-[10px] font-semibold text-slate-700 dark:text-slate-300">${escapeHTML(user.plan)}</td>
+                  <td class="px-3 py-3.5">${statusBadge(user.status)}</td>
+                  <td class="px-3 py-3.5 text-[10px] font-medium text-slate-600 dark:text-slate-400">${escapeHTML(user.workspace)}</td>
+                  <td class="px-4 py-3.5"><div class="flex justify-end">${actionMenu("users", user.id, [{ key: "view", label: "View detail", icon: "contact-round" }, { key: "delete", label: "Delete user", icon: "trash-2", danger: true }], user.name)}</div></td>
+                </tr>`).join("")}</tbody>
+            </table>
+          </div>` : emptyState("No users found", "Try another name, email, plan, or workspace.");
+        refreshIcons();
+      }
+
+      function renderAgents() {
+        const query = document.querySelector('[data-filter="agents"]').value.toLowerCase().trim();
+        const agents = data.agents.filter((agent) => `${agent.name} ${agent.owner} ${agent.workspace} ${agent.status} ${agent.skills.join(" ")}`.toLowerCase().includes(query));
+        document.getElementById("agent-total").textContent = data.agents.length;
+        document.getElementById("agents-list").innerHTML = agents.length ? agents.map((agent) => {
+          const preview = agent.skills.slice(0, 2);
+          const more = agent.skills.slice(2);
+          return `<article class="relative flex flex-col gap-4 border-b border-[#edf0ec] px-4 py-4 last:border-b-0 sm:flex-row sm:items-start sm:px-5 dark:border-white/[0.06]">
+            <div class="flex min-w-0 flex-1 gap-3">
+              <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-[#e5f0e8] text-emerald-800 dark:bg-emerald-300/10 dark:text-emerald-300">${icon("bot", "size-[18px]")}</span>
+              <div class="min-w-0 flex-1">
+                <div class="flex flex-wrap items-center gap-2"><p class="text-xs font-semibold text-slate-800 dark:text-slate-100">${escapeHTML(agent.name)}</p>${statusBadge(agent.status)}</div>
+                <p class="mt-1 text-[10px] text-slate-500 dark:text-slate-400">${escapeHTML(agent.owner)} <span class="px-1 text-slate-300">·</span> ${escapeHTML(agent.workspace)}</p>
+                <div class="mt-3 flex flex-wrap items-center gap-1.5">
+                  ${preview.map((skill) => `<span class="rounded-md border border-[#e5eae4] bg-[#fafbf9] px-2 py-1 text-[9px] font-medium text-slate-600 dark:border-white/10 dark:bg-white/[0.035] dark:text-slate-300">${escapeHTML(skill)}</span>`).join("")}
+                  ${more.length ? `<div data-extra-skills hidden aria-hidden="true" class="flex max-h-0 basis-full flex-wrap gap-1.5 overflow-hidden opacity-0 transition-[max-height,opacity] duration-300 ease-in-out motion-reduce:transition-none">${more.map((skill) => `<span class="rounded-md border border-[#e5eae4] bg-[#fafbf9] px-2 py-1 text-[9px] font-medium text-slate-600 dark:border-white/10 dark:bg-white/[0.035] dark:text-slate-300">${escapeHTML(skill)}</span>`).join("")}</div>` : ""}
+                  ${more.length ? `<button type="button" data-expand-agent="${agent.id}" aria-expanded="false" class="ml-1 inline-flex items-center gap-1 rounded-lg border border-emerald-800/15 bg-emerald-50 px-2 py-1 text-[10px] font-semibold text-emerald-800 transition hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 dark:border-emerald-300/15 dark:bg-emerald-400/10 dark:text-emerald-300 dark:hover:bg-emerald-400/15">${icon("chevron-down", "size-3")}Show ${more.length} more</button>` : ""}
+                </div>
+                <p class="mt-2 text-[9px] text-slate-400">${escapeHTML(agent.runs)} runs this month</p>
+              </div>
+            </div>
+            ${actionMenu("agents", agent.id, [{ key: "configure", label: "Configure", icon: "sliders-horizontal" }, { key: "delete", label: "Delete agent", icon: "trash-2", danger: true }], agent.name)}
+          </article>`;
+        }).join("") : emptyState("No agents found", "Try another agent, owner, workspace, or skill.");
+        refreshIcons();
+      }
+
+      function renderSkills() {
+        const query = document.querySelector('[data-filter="skills"]').value.toLowerCase().trim();
+        const skills = data.skills.filter((skill) => `${skill.name} ${skill.category} ${skill.description}`.toLowerCase().includes(query));
+        document.getElementById("skills-list").innerHTML = skills.length ? skills.map((skill) => `
+          <article class="relative flex flex-col rounded-2xl border border-[#e2e8e1] bg-white p-5 shadow-[0_2px_12px_rgba(20,59,52,0.035)] transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/10 dark:bg-[#18221c] dark:shadow-none dark:hover:border-white/15">
+            <div class="flex items-start justify-between gap-3"><span class="grid size-10 place-items-center rounded-xl ${skill.tone}">${icon(skill.icon, "size-[18px]")}</span>${actionMenu("skills", skill.id, [{ key: "view", label: "View detail", icon: "sparkles" }, { key: "delete", label: "Delete skill", icon: "trash-2", danger: true }], skill.name)}</div>
+            <p class="mt-4 text-[9px] font-semibold uppercase tracking-[0.15em] text-slate-400">${escapeHTML(skill.category)}</p><h3 class="mt-1.5 text-sm font-semibold text-slate-900 dark:text-white">${escapeHTML(skill.name)}</h3><p class="mt-2 flex-1 text-[11px] leading-[1.65] text-slate-500 dark:text-slate-400">${escapeHTML(skill.description)}</p>
+            <div class="mt-4 flex items-center justify-between border-t border-[#edf0ec] pt-3 dark:border-white/[0.07]"><span class="inline-flex items-center gap-1.5 text-[10px] font-medium text-slate-500 dark:text-slate-400"><span class="size-1.5 rounded-full ${skill.count ? "bg-emerald-500" : "bg-slate-300"}"></span>${skill.count ? "Enabled" : "Unused"}</span><span class="text-[10px] font-semibold text-slate-700 dark:text-slate-300">${skill.count} <span class="font-normal text-slate-400">agents</span></span></div>
+          </article>`).join("") : emptyState("No skills found", "Try another skill name or category.");
+        refreshIcons();
+      }
+
+      function renderContracts() {
+        const query = document.querySelector('[data-filter="contracts"]').value.toLowerCase().trim();
+        const contracts = data.contracts.filter((contract) => `${contract.client} ${contract.contact} ${contract.agent} ${contract.status} ${contract.skills.map((skill) => skill.name).join(" ")}`.toLowerCase().includes(query));
+        document.getElementById("contract-total").textContent = data.contracts.length;
+        document.getElementById("contracts-list").innerHTML = contracts.length ? `
+          <div class="overflow-x-auto" role="region" aria-label="Agent contracts" tabindex="0">
+            <table class="w-full min-w-max border-collapse text-left">
+              <caption class="sr-only">Agent rental contracts</caption>
+              <thead class="bg-[#f7f9f6] dark:bg-white/[0.035]"><tr><th scope="col" class="px-5 py-3 text-[9px] font-semibold uppercase tracking-wide text-slate-400">Client</th><th scope="col" class="px-3 py-3 text-[9px] font-semibold uppercase tracking-wide text-slate-400">Agent</th><th scope="col" class="px-3 py-3 text-[9px] font-semibold uppercase tracking-wide text-slate-400">Contracted skills</th><th scope="col" class="px-3 py-3 text-[9px] font-semibold uppercase tracking-wide text-slate-400">Contract dates</th><th scope="col" class="px-3 py-3 text-right text-[9px] font-semibold uppercase tracking-wide text-slate-400">Amount paid</th><th scope="col" class="px-3 py-3 text-[9px] font-semibold uppercase tracking-wide text-slate-400">Status</th><th scope="col" class="px-4 py-3 text-right text-[9px] font-semibold uppercase tracking-wide text-slate-400">Actions</th></tr></thead>
+              <tbody class="divide-y divide-[#edf0ec] dark:divide-white/[0.06]">${contracts.map((contract) => `
+                <tr class="transition-colors hover:bg-[#fafbf9] dark:hover:bg-white/[0.025]">
+                  <td class="px-5 py-3.5"><p class="text-xs font-semibold text-slate-800 dark:text-slate-100">${escapeHTML(contract.client)}</p><p class="mt-1 text-[10px] text-slate-500 dark:text-slate-400">${escapeHTML(contract.contact)}</p></td>
+                  <td class="px-3 py-3.5 text-[10px] font-medium text-slate-700 dark:text-slate-300">${escapeHTML(contract.agent)}</td>
+                  <td class="max-w-xs px-3 py-3.5"><div class="flex flex-wrap gap-1">${contract.skills.map((skill) => `<span class="rounded-md border border-[#e5eae4] bg-[#fafbf9] px-2 py-1 text-[9px] font-medium text-slate-600 dark:border-white/10 dark:bg-white/[0.035] dark:text-slate-300">${escapeHTML(skill.name)}</span>`).join("")}</div></td>
+                  <td class="whitespace-nowrap px-3 py-3.5 text-[10px] font-medium text-slate-700 dark:text-slate-300">${escapeHTML(contract.start)}<span class="mx-1 text-slate-400">to</span>${escapeHTML(contract.end)}</td>
+                  <td class="whitespace-nowrap px-3 py-3.5 text-right text-[11px] font-semibold text-slate-900 dark:text-white">$${contract.paid.toLocaleString("en-US", { minimumFractionDigits: 2 })}</td>
+                  <td class="px-3 py-3.5">${statusBadge(contract.status)}</td>
+                  <td class="px-4 py-3.5"><div class="flex justify-end">${actionMenu("contracts", contract.id, [{ key: "view", label: "View detail", icon: "receipt-text" }], `${contract.client} contract`)}</div></td>
+                </tr>`).join("")}</tbody>
+            </table>
+          </div>` : emptyState("No contracts found", "Try another client, agent, or skill.");
+        refreshIcons();
+      }
+
+      function renderErrors() {
+        const query = document.querySelector('[data-filter="errors"]').value.toLowerCase().trim();
+        const errors = data.errors.filter((error) => `${error.time} ${error.agent} ${error.type} ${error.severity} ${error.description} ${error.resolved ? "resolved" : "unresolved"}`.toLowerCase().includes(query));
+        const unresolved = data.errors.filter((error) => !error.resolved).length;
+        document.getElementById("error-unresolved-total").textContent = unresolved;
+        document.getElementById("sidebar-error-count").textContent = unresolved;
+        document.getElementById("errors-list").innerHTML = errors.length ? errors.map((error) => `
+          <article class="relative flex flex-col gap-3 border-b border-[#edf0ec] px-4 py-4 last:border-b-0 sm:px-5 dark:border-white/[0.06]"><div class="flex items-start justify-between gap-3"><div class="flex min-w-0 gap-3"><span class="mt-0.5 grid size-9 shrink-0 place-items-center rounded-xl ${error.severity === "Critical" ? "bg-rose-50 text-rose-700 dark:bg-rose-400/10 dark:text-rose-300" : error.severity === "Warning" ? "bg-amber-50 text-amber-800 dark:bg-amber-300/10 dark:text-amber-200" : "bg-sky-50 text-sky-800 dark:bg-sky-400/10 dark:text-sky-300"}">${icon(error.resolved ? "circle-check" : "circle-alert", "size-[17px]")}</span><div class="min-w-0"><div class="flex flex-wrap items-center gap-2">${errorTypeBadge(error.type, error.severity)}${severityBadge(error.severity)}${error.resolved ? `<span class="rounded-md bg-emerald-50 px-2 py-1 text-[9px] font-semibold text-emerald-800 dark:bg-emerald-400/10 dark:text-emerald-300">Resolved</span>` : ""}</div><p class="mt-2 text-[11px] font-semibold text-slate-800 dark:text-slate-200">${escapeHTML(error.agent)}</p><p class="mt-1 text-[10px] leading-5 text-slate-500 dark:text-slate-400">${escapeHTML(error.description)}</p><p class="mt-1.5 text-[9px] text-slate-400">${escapeHTML(error.time)}</p></div></div>${actionMenu("errors", error.id, [{ key: "view", label: "View detail", icon: "file-search" }, { key: "resolve", label: "Mark as resolved", icon: "circle-check" }], `${error.agent} error`)}</div></article>`).join("") : emptyState("No errors found", "Try another agent, severity, type, or status.");
+        refreshIcons();
+      }
+
+      function renderView(view) {
+        if (view === "users") renderUsers();
+        if (view === "agents") renderAgents();
+        if (view === "skills") renderSkills();
+        if (view === "contracts") renderContracts();
+        if (view === "errors") renderErrors();
+      }
+
+      function navigate(view) {
+        if (!viewInfo[view]) return;
+        currentView = view;
+        document.querySelectorAll("[data-view]").forEach((section) => section.classList.toggle("hidden", section.dataset.view !== view));
+        document.querySelectorAll("[data-nav]").forEach((link) => {
+          const active = link.dataset.nav === view;
+          link.classList.toggle("is-active", active);
+          link.classList.toggle("border-white/10", active);
+          link.classList.toggle("bg-white/[0.09]", active);
+          link.classList.toggle("text-white", active);
+          link.classList.toggle("text-emerald-50/75", !active);
+          if (active) link.setAttribute("aria-current", "page"); else link.removeAttribute("aria-current");
+        });
+        document.getElementById("page-title").textContent = viewInfo[view].title;
+        document.getElementById("crumb-title").textContent = viewInfo[view].title;
+        renderView(view);
+        history.replaceState(null, "", `#${view}`);
+        closeMobileNav();
+      }
+
+      function closeMobileNav() {
+        document.getElementById("sidebar").classList.add("hidden");
+        document.getElementById("sidebar").classList.remove("flex");
+        document.getElementById("mobile-backdrop").classList.add("hidden");
+        document.getElementById("mobile-open").setAttribute("aria-expanded", "false");
+      }
+
+      function openDialog(title, body, options = {}) {
+        dialogReturnFocus = options.returnFocus || document.activeElement;
+        dialogTitle.textContent = title;
+        dialogEyebrow.textContent = options.eyebrow || "Record details";
+        dialogBody.innerHTML = body;
+        pendingConfirm = options.onConfirm || null;
+        if (options.confirmLabel) {
+          dialogFooter.innerHTML = `<button type="button" data-dialog-close class="rounded-lg border border-[#dfe6de] px-3.5 py-2 text-[11px] font-semibold text-slate-600 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/[0.05]">Cancel</button><button type="button" data-confirm class="inline-flex items-center gap-2 rounded-lg bg-rose-700 px-3.5 py-2 text-[11px] font-semibold text-white shadow-sm hover:bg-rose-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-700 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#18221c]">${icon(options.confirmIcon || "trash-2", "size-3.5")}${escapeHTML(options.confirmLabel)}</button>`;
+          dialogFooter.classList.remove("hidden");
+          dialogFooter.classList.add("flex");
+        } else {
+          dialogFooter.innerHTML = "";
+          dialogFooter.classList.add("hidden");
+          dialogFooter.classList.remove("flex");
+        }
+        dialog.showModal();
+        refreshIcons();
+      }
+
+      function detailRow(label, value) {
+        return `<div class="flex flex-col gap-1 border-b border-[#edf0ec] py-3 last:border-0 dark:border-white/[0.07] sm:flex-row sm:items-start sm:justify-between sm:gap-5"><dt class="text-[10px] font-medium text-slate-400">${label}</dt><dd class="max-w-[68%] break-words text-left text-[11px] font-medium text-slate-700 dark:text-slate-200 sm:text-right">${value}</dd></div>`;
+      }
+
+      function handleAction(action, kind, id, trigger) {
+        const record = data[kind].find((item) => item.id === id);
+        if (!record) return;
+        const returnFocus = trigger;
+        if (kind === "users" && action === "view") {
+          openDialog(record.name, `<dl class="divide-y divide-transparent">${detailRow("User ID", escapeHTML(record.id))}${detailRow("Email", escapeHTML(record.email))}${detailRow("Plan", escapeHTML(record.plan))}${detailRow("Status", statusBadge(record.status))}${detailRow("Workspace", escapeHTML(record.workspace))}${detailRow("Joined", escapeHTML(record.joined))}${detailRow("Registered agents", String(record.agents))}${detailRow("Lifetime spend", escapeHTML(record.spend))}</dl>`, { returnFocus, eyebrow: "User profile" });
+        }
+        if (kind === "users" && action === "delete") {
+          openDialog("Delete this user?", `<p class="text-xs leading-6 text-slate-600 dark:text-slate-300">This will remove <strong class="font-semibold text-slate-900 dark:text-white">${escapeHTML(record.name)}</strong> from the demo list. This action only changes the current page state.</p>`, { returnFocus, eyebrow: "Confirm action", confirmLabel: "Delete user", onConfirm: () => { data.users = data.users.filter((item) => item.id !== id); renderUsers(); } });
+        }
+        if (kind === "agents" && action === "configure") {
+          openDialog(record.name, `<div class="mb-4 flex flex-wrap items-center gap-2">${statusBadge(record.status)}<span class="text-[10px] text-slate-400">Owned by ${escapeHTML(record.owner)}</span></div><label for="agent-prompt" class="mb-2 block text-[10px] font-semibold uppercase tracking-wide text-slate-400">System prompt</label><textarea id="agent-prompt" data-agent-prompt rows="8" spellcheck="false" class="w-full resize-y rounded-xl border border-[#e1e7df] bg-[#f7f9f6] p-4 text-[11px] leading-6 text-slate-700 outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/10 dark:border-white/10 dark:bg-black/15 dark:text-slate-200 dark:focus:border-emerald-400">${escapeHTML(record.prompt)}</textarea><div class="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><p id="prompt-save-status" role="status" aria-live="polite" class="text-[10px] text-slate-400">Prompt changes are local to this prototype.</p><button type="button" data-save-prompt="${escapeHTML(record.id)}" class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#174b3d] px-3.5 py-2 text-[11px] font-semibold text-white hover:bg-[#123d32] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 dark:bg-emerald-700 dark:hover:bg-emerald-600">${icon("save", "size-3.5")}Save prompt</button></div>`, { returnFocus, eyebrow: "Agent configuration" });
+        }
+        if (kind === "agents" && action === "delete") {
+          openDialog("Delete this agent?", `<p class="text-xs leading-6 text-slate-600 dark:text-slate-300">Remove <strong class="font-semibold text-slate-900 dark:text-white">${escapeHTML(record.name)}</strong> from the demo fleet? This only changes the current page state.</p>`, { returnFocus, eyebrow: "Confirm action", confirmLabel: "Delete agent", onConfirm: () => { data.agents = data.agents.filter((item) => item.id !== id); renderAgents(); } });
+        }
+        if (kind === "skills" && action === "view") {
+          openDialog(record.name, `<div class="mb-4 flex items-center gap-2"><span class="rounded-md bg-slate-100 px-2 py-1 text-[9px] font-semibold text-slate-600 dark:bg-white/10 dark:text-slate-300">${escapeHTML(record.category)}</span><span class="rounded-md bg-emerald-50 px-2 py-1 text-[9px] font-semibold text-emerald-800 dark:bg-emerald-400/10 dark:text-emerald-300">${record.count} agents enabled</span></div><p class="text-xs leading-6 text-slate-600 dark:text-slate-300">${escapeHTML(record.full)}</p><div class="mt-5 rounded-xl bg-[#f5f8f4] p-4 dark:bg-white/[0.04]"><p class="text-[10px] font-semibold text-slate-700 dark:text-slate-200">Capability status</p><p class="mt-1 text-[10px] leading-5 text-slate-500 dark:text-slate-400">${record.count ? `Currently attached to ${record.count} agents across the platform.` : "This skill is not currently attached to any agents."}</p></div>`, { returnFocus, eyebrow: "Skill details" });
+        }
+        if (kind === "skills" && action === "delete") {
+          openDialog("Delete this skill?", `<p class="text-xs leading-6 text-slate-600 dark:text-slate-300">Remove <strong class="font-semibold text-slate-900 dark:text-white">${escapeHTML(record.name)}</strong> from the demo catalog? This only changes the current page state.</p>`, { returnFocus, eyebrow: "Confirm action", confirmLabel: "Delete skill", onConfirm: () => { data.skills = data.skills.filter((item) => item.id !== id); renderSkills(); } });
+        }
+        if (kind === "contracts" && action === "view") {
+          const lineItems = record.skills.map((skill) => `<div class="flex items-center justify-between gap-4 border-b border-[#edf0ec] py-3 last:border-0 dark:border-white/[0.07]"><span class="text-[11px] font-medium text-slate-600 dark:text-slate-300">${escapeHTML(skill.name)}</span><span class="shrink-0 text-[11px] font-semibold text-slate-800 dark:text-slate-100">$${skill.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}</span></div>`).join("");
+          openDialog(`${record.client} contract`, `<div class="flex flex-wrap items-center gap-2">${statusBadge(record.status)}<span class="text-[10px] text-slate-400">${escapeHTML(record.agent)}</span></div><dl class="mt-4">${detailRow("Client contact", escapeHTML(record.contact))}${detailRow("Contract dates", `${escapeHTML(record.start)} – ${escapeHTML(record.end)}`)}</dl><div class="mt-5"><div class="mb-1 flex items-center justify-between"><p class="text-[10px] font-semibold uppercase tracking-wide text-slate-400">Contracted skills</p><p class="text-[9px] text-slate-400">${record.skills.length} items</p></div>${lineItems}<div class="mt-1 flex items-center justify-between border-t border-[#dfe6de] pt-3 dark:border-white/10"><span class="text-[11px] font-semibold text-slate-700 dark:text-slate-200">Total amount paid</span><span class="text-sm font-semibold text-slate-900 dark:text-white">$${record.paid.toLocaleString("en-US", { minimumFractionDigits: 2 })}</span></div></div>`, { returnFocus, eyebrow: "Contract breakdown" });
+        }
+        if (kind === "errors" && action === "view") {
+          openDialog(record.type, `<div class="flex flex-wrap items-center gap-2">${severityBadge(record.severity)}${record.resolved ? `<span class="rounded-md bg-emerald-50 px-2 py-1 text-[9px] font-semibold text-emerald-800 dark:bg-emerald-400/10 dark:text-emerald-300">Resolved</span>` : ""}<span class="text-[10px] text-slate-400">${escapeHTML(record.time)}</span></div><p class="mt-3 text-xs leading-5 text-slate-700 dark:text-slate-300">${escapeHTML(record.description)}</p><p class="mb-2 mt-5 text-[10px] font-semibold uppercase tracking-wide text-slate-400">Execution trace</p><pre class="max-h-72 overflow-auto whitespace-pre-wrap rounded-xl border border-[#e6ebe5] bg-[#f7f9f6] p-4 text-[10px] leading-5 text-slate-700 dark:border-white/10 dark:bg-black/15 dark:text-slate-300">${escapeHTML(record.trace)}</pre>`, { returnFocus, eyebrow: `Error · ${record.agent}` });
+        }
+        if (kind === "errors" && action === "resolve") {
+          record.resolved = true;
+          renderErrors();
+        }
+      }
+
+      document.querySelectorAll("[data-nav]").forEach((link) => link.addEventListener("click", (event) => {
+        event.preventDefault();
+        navigate(link.dataset.nav);
+      }));
+
+      document.querySelectorAll("[data-filter]").forEach((input) => input.addEventListener("input", () => renderView(input.dataset.filter)));
+
+      document.addEventListener("click", (event) => {
+        const menuTrigger = event.target.closest("[data-menu-trigger]");
+        if (menuTrigger) {
+          const menu = menuTrigger.parentElement.querySelector("[data-menu-panel]");
+          const willOpen = menu.hidden;
+          document.querySelectorAll("[data-menu-panel]").forEach((panel) => { panel.hidden = true; panel.parentElement.querySelector("[data-menu-trigger]").setAttribute("aria-expanded", "false"); });
+          menu.hidden = !willOpen;
+          menuTrigger.setAttribute("aria-expanded", String(willOpen));
+          return;
+        }
+
+        const actionButton = event.target.closest("[data-action]");
+        if (actionButton) {
+          const row = actionButton.closest("article, tr");
+          const trigger = row ? row.querySelector("[data-menu-trigger]") : null;
+          const panel = actionButton.closest("[data-menu-panel]");
+          if (panel) panel.hidden = true;
+          if (trigger) trigger.setAttribute("aria-expanded", "false");
+          handleAction(actionButton.dataset.action, actionButton.dataset.kind, actionButton.dataset.id, trigger);
+          return;
+        }
+
+        if (!event.target.closest("[data-menu-panel]")) {
+          document.querySelectorAll("[data-menu-panel]").forEach((panel) => { panel.hidden = true; panel.parentElement.querySelector("[data-menu-trigger]").setAttribute("aria-expanded", "false"); });
+        }
+
+        const expandButton = event.target.closest("[data-expand-agent]");
+        if (expandButton) {
+          const skills = expandButton.parentElement.querySelector("[data-extra-skills]");
+          const expanded = expandButton.getAttribute("aria-expanded") === "true";
+          if (expanded) {
+            skills.setAttribute("aria-hidden", "true");
+            skills.classList.remove("max-h-24", "opacity-100");
+            skills.classList.add("max-h-0", "opacity-0");
+            skills.addEventListener("transitionend", () => {
+              if (skills.getAttribute("aria-hidden") === "true") skills.hidden = true;
+            }, { once: true });
+          } else {
+            skills.hidden = false;
+            skills.setAttribute("aria-hidden", "false");
+            requestAnimationFrame(() => {
+              skills.classList.remove("max-h-0", "opacity-0");
+              skills.classList.add("max-h-24", "opacity-100");
+            });
+          }
+          expandButton.setAttribute("aria-expanded", String(!expanded));
+          expandButton.innerHTML = `${icon(expanded ? "chevron-down" : "chevron-up", "size-3")}${expanded ? `Show ${skills.children.length} more` : "Show less"}`;
+          refreshIcons();
+          return;
+        }
+
+        const goButton = event.target.closest("[data-go]");
+        if (goButton) navigate(goButton.dataset.go);
+      });
+
+      document.getElementById("theme-toggle").addEventListener("click", () => {
+        const dark = document.documentElement.classList.toggle("dark");
+        const toggle = document.getElementById("theme-toggle");
+        toggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+        document.getElementById("theme-icon").setAttribute("data-lucide", dark ? "sun" : "moon");
+        try { localStorage.setItem("agenthub-theme", dark ? "dark" : "light"); } catch (error) { /* Storage may be unavailable in private browsing. */ }
+        refreshIcons();
+      });
+
+      document.getElementById("mobile-open").addEventListener("click", () => {
+        document.getElementById("sidebar").classList.remove("hidden");
+        document.getElementById("sidebar").classList.add("flex");
+        document.getElementById("mobile-backdrop").classList.remove("hidden");
+        document.getElementById("mobile-open").setAttribute("aria-expanded", "true");
+      });
+      document.getElementById("mobile-close").addEventListener("click", closeMobileNav);
+      document.getElementById("mobile-backdrop").addEventListener("click", closeMobileNav);
+
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) dialog.close();
+        if (event.target.closest("[data-dialog-close]")) dialog.close();
+        const savePromptButton = event.target.closest("[data-save-prompt]");
+        if (savePromptButton) {
+          const agent = data.agents.find((item) => item.id === savePromptButton.dataset.savePrompt);
+          const promptField = dialog.querySelector("[data-agent-prompt]");
+          if (agent && promptField) {
+            agent.prompt = promptField.value;
+            dialog.querySelector("#prompt-save-status").textContent = "Prompt saved locally for this prototype.";
+          }
+          return;
+        }
+        if (event.target.closest("[data-confirm]")) {
+          const confirm = pendingConfirm;
+          pendingConfirm = null;
+          if (confirm) confirm();
+          dialog.close();
+        }
+      });
+      dialog.addEventListener("close", () => {
+        if (dialogReturnFocus && dialogReturnFocus.isConnected) dialogReturnFocus.focus();
+        else document.getElementById(`${currentView}-heading`)?.focus();
+        dialogReturnFocus = null;
+      });
+
+      try {
+        if (localStorage.getItem("agenthub-theme") === "dark") {
+          document.documentElement.classList.add("dark");
+          document.getElementById("theme-toggle").setAttribute("aria-label", "Switch to light mode");
+          document.getElementById("theme-icon").setAttribute("data-lucide", "sun");
+        }
+      } catch (error) { /* Use the default light theme when storage is unavailable. */ }
+
+      const initialView = location.hash.slice(1);
+      if (viewInfo[initialView]) navigate(initialView);
+      else renderErrors();
+      refreshIcons();
+    </script>
+  </body>
+  </html>
